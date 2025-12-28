@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "ai-builders-coach": {
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "$env:HTTP_PROXY='http://127.0.0.1:7897'; $env:HTTPS_PROXY='http://127.0.0.1:7897'; $env:http_proxy='http://127.0.0.1:7897'; $env:https_proxy='http://127.0.0.1:7897'; $env:npm_config_proxy='http://127.0.0.1:7897'; $env:npm_config_https_proxy='http://127.0.0.1:7897'; $env:AI_BUILDER_TOKEN='your_token_here'; npx -y @aibuilders/mcp-coach-server"
+      ]
+    }
+  }
+}
+
