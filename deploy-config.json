@@ -1,0 +1,10 @@
+{
+  "repo_url": "https://github.com/trentsun/hilloworld-chat",
+  "service_name": "hilloworld-chat",
+  "branch": "main",
+  "port": 3000,
+  "env_vars": {
+    "NODE_ENV": "production"
+  }
+}
+
