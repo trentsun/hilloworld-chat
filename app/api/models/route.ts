@@ -11,7 +11,7 @@ export async function GET() {
       models: models.data.map((model) => ({
         id: model.id,
         name: model.id,
-        description: model.description || '',
+        description: (model as any).description || '',
       })),
     });
   } catch (error: any) {
