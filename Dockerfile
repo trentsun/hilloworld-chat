@@ -4,7 +4,8 @@ FROM node:20-alpine AS base
 FROM base AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm ci
+# 使用 npm install 确保兼容性（npm ci 在某些环境下可能失败）
+RUN npm install --production=false
 
 # 构建应用
 FROM base AS builder
