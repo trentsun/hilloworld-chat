@@ -11,6 +11,8 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# 确保 public 目录存在（如果不存在则创建）
+RUN mkdir -p public || true
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
@@ -25,9 +27,13 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # 复制 standalone 构建产物
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+# standalone 模式会将应用打包到 .next/standalone 目录
+# standalone 目录包含 server.js, node_modules, package.json 等
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+# 复制静态文件（standalone 模式不包含静态文件，需要单独复制）
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# 复制 public 目录（builder 阶段已确保存在）
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
 USER nextjs
 
