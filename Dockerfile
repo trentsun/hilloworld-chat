@@ -26,10 +26,13 @@ RUN adduser --system --uid 1001 nextjs
 
 # 复制 standalone 构建产物
 # standalone 模式会将应用打包到 .next/standalone 目录
-# standalone 目录包含 server.js, node_modules, package.json, public 等
+# standalone 目录包含 server.js, node_modules, package.json 等
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 # 复制静态文件（standalone 模式不包含静态文件，需要单独复制）
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# 确保 public 目录存在（standalone 模式不包含 public 目录）
+# 如果 public 目录存在且有内容则复制，否则创建空目录
+RUN mkdir -p ./public
 
 USER nextjs
 
